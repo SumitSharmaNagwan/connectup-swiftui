@@ -11,7 +11,9 @@ import Foundation
 import SwiftUI
 
 struct MainApp : View{
+    
     var logoutUser : (LoginFlowScreen)->()
+    let mainViewNodel = MainViewModel()
     var body: some View{
         
         TabView{
@@ -37,6 +39,8 @@ struct MainApp : View{
                 Image("moreIcon")
                 Text("Menu")
             }
+        }.onAppear{
+            mainViewNodel.refreshMyProfile()
         }
         
     }

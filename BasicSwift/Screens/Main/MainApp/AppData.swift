@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+class AppData {
+    static let shared = AppData()
+    private init(){}
+    
+}

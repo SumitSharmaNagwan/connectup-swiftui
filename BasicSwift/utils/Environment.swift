@@ -6,3 +6,19 @@
 //
 
 import Foundation
+
+class UserInfo:   ObservableObject{
+   @Published var name : String?
+   @Published var isLogin : Bool = false
+}
+
+
+@MainActor class UserInfoEvn : ObservableObject {
+    @Published var userInfo : UserInfo
+    init( ) {
+        self.userInfo = UserInfo()
+        self.userInfo.name = nil
+        self.userInfo.isLogin = false
+    }
+    
+}
