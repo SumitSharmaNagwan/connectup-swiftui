@@ -35,10 +35,16 @@ final class HttpUtility{
         
     }
     
-    func apiCall<ResultType: Decodable>(request: Encodable?, methodType: MethodType, endPoint : String, resultType: ResultType.Type , completionHandler: @escaping (_ result: ResultType?)-> Void ){
+    func apiCall<ResultType: Decodable>(request: Encodable?, methodType: MethodType, endPoint : String, resultType: ResultType.Type , completionHandler: @escaping (_ result: ResultType?)-> Void , query : Array<URLQueryItem>? = nil){
         
         let url = Constant.BASE_URL_DEV + endPoint
-        var urlRequest = URLRequest(url: URL(string: url)!)
+        var urlComponent = URLComponents(string: url)
+       if query != nil{
+           urlComponent?.queryItems = query
+        }
+        
+        var urlRequest = URLRequest(url: (urlComponent?.url!)!)
+        
         urlRequest.httpMethod = methodType.rawValue
         urlRequest.addValue("application/json", forHTTPHeaderField: "content-type")
         

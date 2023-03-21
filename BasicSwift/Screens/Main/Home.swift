@@ -11,11 +11,10 @@ import SwiftUI
 struct HomeScreen:View{
    
     var body: some View{
-        Text("Home")
-            .onAppear{
-               // loginApi.getPost()
-               // userApi.getUserProfile()
-            }
+        VStack{
+            HomeAppBar(title: "Home")
+            Spacer()
+        }
     }
         
 }

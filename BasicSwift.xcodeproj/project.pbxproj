@@ -25,6 +25,9 @@
 		F144B07829C88BB000F1170E /* RecommendationApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = F144B07729C88BB000F1170E /* RecommendationApi.swift */; };
 		F144B07B29C88E4600F1170E /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F144B07A29C88E4600F1170E /* SearchViewModel.swift */; };
 		F144B08029C99B0200F1170E /* Model1.swift in Sources */ = {isa = PBXBuildFile; fileRef = F144B07F29C99B0200F1170E /* Model1.swift */; };
+		F144B08329C9E4D100F1170E /* model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F144B08229C9E4D100F1170E /* model.swift */; };
+		F144B08529C9E57E00F1170E /* ChatApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = F144B08429C9E57E00F1170E /* ChatApi.swift */; };
+		F144B08729C9E98400F1170E /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F144B08629C9E98400F1170E /* ChatViewModel.swift */; };
 		F1D27F8029BF04B40084215A /* BasicSwiftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D27F7F29BF04B40084215A /* BasicSwiftApp.swift */; };
 		F1D27F8229BF04B40084215A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D27F8129BF04B40084215A /* ContentView.swift */; };
 		F1D27F8429BF04B60084215A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1D27F8329BF04B60084215A /* Assets.xcassets */; };
@@ -89,6 +92,9 @@
 		F144B07729C88BB000F1170E /* RecommendationApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationApi.swift; sourceTree = "<group>"; };
 		F144B07A29C88E4600F1170E /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		F144B07F29C99B0200F1170E /* Model1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model1.swift; sourceTree = "<group>"; };
+		F144B08229C9E4D100F1170E /* model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = model.swift; sourceTree = "<group>"; };
+		F144B08429C9E57E00F1170E /* ChatApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatApi.swift; sourceTree = "<group>"; };
+		F144B08629C9E98400F1170E /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		F1D27F7C29BF04B40084215A /* BasicSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BasicSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1D27F7F29BF04B40084215A /* BasicSwiftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicSwiftApp.swift; sourceTree = "<group>"; };
 		F1D27F8129BF04B40084215A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -166,6 +172,7 @@
 				F126E84F29C452DC005029DF /* Utils */,
 				F126E84D29C452D1005029DF /* LoginApi.swift */,
 				F144B07729C88BB000F1170E /* RecommendationApi.swift */,
+				F144B08429C9E57E00F1170E /* ChatApi.swift */,
 			);
 			path = Api;
 			sourceTree = "<group>";
@@ -203,6 +210,8 @@
 			isa = PBXGroup;
 			children = (
 				F126E84429C33AF8005029DF /* ChatList.swift */,
+				F144B08229C9E4D100F1170E /* model.swift */,
+				F144B08629C9E98400F1170E /* ChatViewModel.swift */,
 			);
 			path = chat;
 			sourceTree = "<group>";
@@ -472,6 +481,7 @@
 				F126E84B29C33B47005029DF /* MenuScreen.swift in Sources */,
 				F1D27FDA29C19CDC0084215A /* Welcome.swift in Sources */,
 				F126E84529C33AF8005029DF /* ChatList.swift in Sources */,
+				F144B08529C9E57E00F1170E /* ChatApi.swift in Sources */,
 				F1D27FD429C0940B0084215A /* Colors.swift in Sources */,
 				F1D27F8929BF04B60084215A /* Persistence.swift in Sources */,
 				F144B07429C848DC00F1170E /* MainViewModel.swift in Sources */,
@@ -483,6 +493,7 @@
 				F1D27F8229BF04B40084215A /* ContentView.swift in Sources */,
 				F144B07629C8532600F1170E /* Model.swift in Sources */,
 				F1D27F8C29BF04B60084215A /* BasicSwift.xcdatamodeld in Sources */,
+				F144B08329C9E4D100F1170E /* model.swift in Sources */,
 				F144B07829C88BB000F1170E /* RecommendationApi.swift in Sources */,
 				F144B07B29C88E4600F1170E /* SearchViewModel.swift in Sources */,
 				F1D27FD629C098970084215A /* AppBar.swift in Sources */,
@@ -498,6 +509,7 @@
 				F1D27FCD29C066CE0084215A /* SignUpViewModel.swift in Sources */,
 				F144B08029C99B0200F1170E /* Model1.swift in Sources */,
 				F126E83D29C1D443005029DF /* InputText.swift in Sources */,
+				F144B08729C9E98400F1170E /* ChatViewModel.swift in Sources */,
 				F144B07229C8471C00F1170E /* AppData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

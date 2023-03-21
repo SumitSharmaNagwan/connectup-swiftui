@@ -14,8 +14,9 @@ struct MenuScreen : View{
     var logoutUser : (LoginFlowScreen)->()
     var body: some View{
         VStack{
-            Text("Menu screen")
-            Spacer()
+            HomeAppBar(title: "Menu")
+            
+                    Spacer()
             Text("Logout")
                 .onTapGesture {
                     let firebaseAuth = Auth.auth()
