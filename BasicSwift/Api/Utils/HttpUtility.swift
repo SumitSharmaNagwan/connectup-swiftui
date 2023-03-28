@@ -16,23 +16,36 @@ final class HttpUtility{
     static let shared = HttpUtility()
     private init(){}
     
-   private func postData<T:Decodable>(request : URLRequest, resultType:T.Type, completionHandler: @escaping (_ result: T?)-> Void){
+    private func postData<T:Decodable>(request : URLRequest, resultType:T.Type, completionHandler: @escaping (_ result: T?)-> Void){
         
+        DispatchQueue.main.async {
+            
         URLSession.shared.dataTask(with: request){data, response, error in
             print(error)
             print(response)
             print("JSON String: \(String(data: data!, encoding: .utf8))")
-
-                 
+            
+            
             if(error == nil && data != nil){
                 
-                let response = try? JSONDecoder().decode(resultType.self, from: data!)
-                
-                completionHandler(response)
+                do{
+                    var jsonDecoder = JSONDecoder()
+                    let format = DateFormatter()
+                    format.dateFormat =     "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+                    jsonDecoder.dateDecodingStrategy = .formatted(format)
+                    let response =  try jsonDecoder.decode(resultType.self, from: data!)
+                    
+                    
+                    completionHandler(response)
+                }
+                catch {
+                    
+                }
             }
             
         }.resume()
         
+    }
     }
     
     func apiCall<ResultType: Decodable>(request: Encodable?, methodType: MethodType, endPoint : String, resultType: ResultType.Type , completionHandler: @escaping (_ result: ResultType?)-> Void , query : Array<URLQueryItem>? = nil){

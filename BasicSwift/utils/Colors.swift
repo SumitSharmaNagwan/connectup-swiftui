@@ -23,7 +23,10 @@ struct AppColors{
     static let faceBookColor = Color("facebookColor")
     static let grayScaleGray4 = Color("grayScaleGray4")
     static let grayScaleGray2 = Color("grayScaleGray2")
+    static let grayScaleGray1 = Color("grayScaleGray1")
     static let grayScaleGray5 = Color("grayScaleGray5")
+    static let redButtonDisable = Color("redButtonDisable")
+    static let redButtenPressed = Color("redButtenPressed")
     static let screenBackGround = Color.white
     
     

@@ -32,7 +32,7 @@ struct MessageBox{
         }.padding()
     }
 }
-
+/*
 
 struct ImageView :View{
     var body: some View{
@@ -60,9 +60,10 @@ struct ImageView :View{
     }
 }
 
+*/
+
 struct MessageBox_PreView: PreviewProvider {
    static var previews : some View {
       // MessageBox().body
-       ImageView()
-    }
+       Text("ggg")    }
 }

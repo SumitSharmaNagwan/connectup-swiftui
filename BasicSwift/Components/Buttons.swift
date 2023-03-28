@@ -9,65 +9,42 @@
 import Foundation
 import SwiftUI
 
-enum ButtonState{
-    case Default, Preesed,Disable
-}
-
-struct ButtonSolidGreen : View {
-    @State private var state : ButtonState = ButtonState.Default
+struct PrimaryButton : View {
     @State var label : String
     var action : ()->()
-    var body: some View{
-
-        
-        Button(action: {
-            action()
-        }){
-           Spacer()
-            Text(label)
-                .font(.system(size: 24))
-                .multilineTextAlignment(.center)
-               // .frame(width: .infinity)
-               // .onTapGesture {print("tap gesture")}
-            
-            Spacer()
-    
+    @State
+    var isDisable  = false
+    var buttonColorSolid : ButtonColorSolid = ButtonColorSolid.Green
+    var body: some View {
+            Button(label) {
+               action()
+            }
+            .buttonStyle(PrimaryButtonStyleSolid(isDisable: isDisable,buttonColorSolid: buttonColorSolid))
+          
+            .disabled(isDisable)
         }
-        .frame(width: .infinity ,height: 48)
-        .buttonStyle(.plain)
-        .background(in: RoundedRectangle(cornerRadius: 24))
-        .backgroundStyle(getButtonColor(state: state))
-    }
+    
+
 }
 
 
 struct ButtonOutLook : View {
-    @State private var state : ButtonState = ButtonState.Default
+  
     @State var label : String
     var action : ()->()
-    var body: some View{
-
+    @State
+    var isDiable  = false
+    var body: some View {
         
         Button(action: {
             action()
         }){
-           Spacer()
+          
             Text(label)
-                .font(.system(size: 24))
-                .multilineTextAlignment(.center)
-             
-            
-            Spacer()
-    
         }
-        .frame(width: .infinity ,height: 48)
-        .buttonStyle(.plain)
-        .backgroundStyle(getButtonColor(state: state))
-        .overlay{
-            RoundedRectangle(cornerRadius: 24)
-                .stroke(AppColors.grayScaleSoftBlack,lineWidth: 1)
-        }
-        
+       
+        .buttonStyle(SecondaryButtonStyle(isDisable: isDiable))
+       
     }
 }
 struct Test : View{
@@ -77,6 +54,7 @@ struct Test : View{
             Spacer()
             Text("fsdsf")
             Button {
+                print("Test \(Date())")
                 print("click")
             } label: {
                 Text("some button")
@@ -87,6 +65,7 @@ struct Test : View{
             }
             
             .buttonStyle(.plain)
+            
 
             Spacer()
            
@@ -95,17 +74,39 @@ struct Test : View{
     }
 }
 
-func getButtonColor(state : ButtonState) -> Color{
-    return AppColors.primaryMainGreen
+
+
+struct AllButtonView : View {
+    var diasble = false
+    var body: some View {
+        VStack {
+        
+            PrimaryButton(label: "Hello", action: {
+                
+            } ,isDisable: diasble, buttonColorSolid: ButtonColorSolid.Green)
+                
+            PrimaryButton(label: "Hello", action: {
+                
+            } ,isDisable: diasble, buttonColorSolid: ButtonColorSolid.Black)
+            
+            PrimaryButton(label: "Hello", action: {
+                
+            } ,isDisable: diasble, buttonColorSolid: ButtonColorSolid.Red)
+            
+            PrimaryButton(label: "Hello", action: {
+                
+            } ,isDisable: diasble, buttonColorSolid: ButtonColorSolid.White)
+        
+        }
+        .background(Color.blue)
+    }
 }
 
 struct ButtonProvider : PreviewProvider{
     static var previews: some View{
         Group{
             
-            ButtonSolidGreen(label: "Button"){
-                
-            }
+           AllButtonView()
             ButtonOutLook(label: "gddfd") {
                 
             }

@@ -40,6 +40,7 @@ struct InputTextField: View {
     var endIcon : String? = nil
     var placeHolder : String? = nil
     @Binding var text : String
+    @FocusState var focused: Bool
     var padding = 16.0
     @State private var edges = EdgeInsets(top: 0, leading: 65, bottom: 9, trailing: 0)
     @StateObject private var vm = ViewModel()
@@ -54,16 +55,16 @@ struct InputTextField: View {
                             .padding(.horizontal,padding)
                     }
                     
-                        
                     TextField("", text: $text) { isEditing in
                             DispatchQueue.main.async {
-                                if isEditing {
+                                if isEditing || !text.isEmpty {
                                     edges = EdgeInsets(top: 0, leading: 65, bottom: 48, trailing: 0)
                                 }else{
                                     edges = EdgeInsets(top: 0, leading: 65, bottom: 9, trailing: 0)
                                 }
                             }
                         }
+                    .focused($focused, equals: true)
                     
                     
                     if endIcon != nil{
@@ -84,6 +85,9 @@ struct InputTextField: View {
                 .font(.system(size: 14,weight: Font.Weight.bold))
                 .foregroundColor(AppColors.grayScaleGray4)
         }
+        .onTapGesture {
+            focused = true
+        }
        // .background(AppColors.grayScaleGray4)
     }
 }
@@ -92,9 +96,30 @@ struct InputTextField: View {
 struct InputTextFieldPreView: PreviewProvider{
     static var previews: some View{
         Group{
+            FormView()
             InputTextField(startIcon: "email",endIcon: "eye",placeHolder: "Name",text: .constant("Hello"))
             
             SearchView(searchText: .constant(""))
         }
+    }
+}
+
+
+
+
+
+struct FormView : View {
+    @State var text1 : String = ""
+    @State var text2 : String = ""
+    
+    
+    var body: some View {
+        VStack {
+            
+            InputTextField(startIcon:"email", placeHolder: "Name", text: $text1)
+            InputTextField(startIcon: "email",placeHolder: "Last name", text: $text2)
+            
+        }
+        .padding(.horizontal,20)
     }
 }

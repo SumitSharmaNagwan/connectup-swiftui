@@ -18,10 +18,13 @@ class ChatViewModel : ObservableObject {
     
     func getMatchConnection(){
         
+        
         chatApi.matchConnection( newMatchedOnly: true) { result in
             print(result)
             if result != nil {
+                print("matchCount = \(self.matchConnection.count)")
                 self.matchConnection.append(contentsOf: result!)
+                print("matchCount = \(self.matchConnection.count)")
             }
         }
     }
@@ -31,6 +34,11 @@ class ChatViewModel : ObservableObject {
         chatApi.getchatGroupList{ result in
             print(result)
             if result != nil {
+                result?.forEach({ ChatListItem in
+                    print(ChatListItem.type)
+                    print(ChatListItem.type?.rawValue)
+               
+                })
                 self.chatGroupList.append(contentsOf: result!)
             }
         }

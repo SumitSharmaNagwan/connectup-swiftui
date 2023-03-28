@@ -24,13 +24,15 @@ struct WelcomeScreen: View{
                 .padding(.horizontal,60)
                 .padding(.bottom,52)
                 
-            ButtonSolidGreen(label: "Login"){
+            PrimaryButton(label: "Login", action:{
                 next(LoginFlowScreen.Login)
             }
+                       , buttonColorSolid: ButtonColorSolid.Green )
             .padding(.horizontal,16)
             ButtonOutLook(label: "Register") {
                 
             }
+                      
             .padding(.horizontal,16)
             .padding(.top,16)
                 

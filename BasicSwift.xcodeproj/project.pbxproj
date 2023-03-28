@@ -28,6 +28,9 @@
 		F144B08329C9E4D100F1170E /* model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F144B08229C9E4D100F1170E /* model.swift */; };
 		F144B08529C9E57E00F1170E /* ChatApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = F144B08429C9E57E00F1170E /* ChatApi.swift */; };
 		F144B08729C9E98400F1170E /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F144B08629C9E98400F1170E /* ChatViewModel.swift */; };
+		F144B08929CAE4B600F1170E /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F144B08829CAE4B600F1170E /* ImageView.swift */; };
+		F1C8957B29CB2800006744FC /* extra.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C8957A29CB2800006744FC /* extra.swift */; };
+		F1D2724829CDA7FC008F8BFB /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D2724729CDA7FC008F8BFB /* ButtonStyle.swift */; };
 		F1D27F8029BF04B40084215A /* BasicSwiftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D27F7F29BF04B40084215A /* BasicSwiftApp.swift */; };
 		F1D27F8229BF04B40084215A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D27F8129BF04B40084215A /* ContentView.swift */; };
 		F1D27F8429BF04B60084215A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1D27F8329BF04B60084215A /* Assets.xcassets */; };
@@ -95,6 +98,9 @@
 		F144B08229C9E4D100F1170E /* model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = model.swift; sourceTree = "<group>"; };
 		F144B08429C9E57E00F1170E /* ChatApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatApi.swift; sourceTree = "<group>"; };
 		F144B08629C9E98400F1170E /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		F144B08829CAE4B600F1170E /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
+		F1C8957A29CB2800006744FC /* extra.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extra.swift; sourceTree = "<group>"; };
+		F1D2724729CDA7FC008F8BFB /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 		F1D27F7C29BF04B40084215A /* BasicSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BasicSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1D27F7F29BF04B40084215A /* BasicSwiftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicSwiftApp.swift; sourceTree = "<group>"; };
 		F1D27F8129BF04B40084215A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -289,6 +295,9 @@
 				F1D27FD529C098970084215A /* AppBar.swift */,
 				F1D27FD729C0A3980084215A /* Buttons.swift */,
 				F126E83C29C1D443005029DF /* InputText.swift */,
+				F144B08829CAE4B600F1170E /* ImageView.swift */,
+				F1C8957A29CB2800006744FC /* extra.swift */,
+				F1D2724729CDA7FC008F8BFB /* ButtonStyle.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -475,6 +484,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1D2724829CDA7FC008F8BFB /* ButtonStyle.swift in Sources */,
 				F126E85129C4530A005029DF /* HttpUtility.swift in Sources */,
 				F1D27FCF29C06C180084215A /* Application.swift in Sources */,
 				F126E84929C33B34005029DF /* ProfileScreen.swift in Sources */,
@@ -503,6 +513,8 @@
 				F126E85329C4775B005029DF /* Constant.swift in Sources */,
 				F1D27FD229C08D920084215A /* SplashScreen.swift in Sources */,
 				F1D27FB729BF40CD0084215A /* AppRoot.swift in Sources */,
+				F1C8957B29CB2800006744FC /* extra.swift in Sources */,
+				F144B08929CAE4B600F1170E /* ImageView.swift in Sources */,
 				F126E83F29C32101005029DF /* MainApp.swift in Sources */,
 				F1D27F8029BF04B40084215A /* BasicSwiftApp.swift in Sources */,
 				F1D27FB529BF3C3A0084215A /* LoginScreen.swift in Sources */,
@@ -669,14 +681,16 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BasicSwift/Preview Content\"";
+				DEVELOPMENT_TEAM = Z6GGPUCSYY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BasicSwift/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Connectup;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -698,14 +712,16 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BasicSwift/Preview Content\"";
+				DEVELOPMENT_TEAM = Z6GGPUCSYY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BasicSwift/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Connectup;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

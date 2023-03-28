@@ -24,7 +24,7 @@ struct MyProfileModel: Decodable {
   //  let iAmLookingForIndustries: String?
     let about: String?
    // let profileImageId: Int?
-   // let profileImageUrl: String?
+    let profileImageUrl: String?
    // let coverImageId: Int?
    // let coverImageUrl: String
    // let isEmailVerified: Bool

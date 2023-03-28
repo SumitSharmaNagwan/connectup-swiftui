@@ -12,6 +12,7 @@ struct ChatListScreen:View{
     @ObservedObject
     var viewModel = ChatViewModel()
     var body: some View{
+        //  NavigationView{
         ZStack{
             VStack(spacing: 0){
                 HomeAppBar(title: "Chat")
@@ -27,8 +28,9 @@ struct ChatListScreen:View{
                         .padding(.horizontal,16)
                     ScrollView(.horizontal, showsIndicators: false){
                         LazyHStack(spacing:0){
-                            ForEach(viewModel.matchConnection, id: \.self){ item in
-                                MatchConnectionView(data: item)
+                            ForEach($viewModel.matchConnection, id: \.self){ item in
+                                
+                                MatchConnectionView(data: item.wrappedValue)
                                     .padding(.leading,16)
                             }
                         }
@@ -45,7 +47,16 @@ struct ChatListScreen:View{
                     
                     LazyVStack(spacing:0){
                         ForEach(viewModel.chatGroupList,id: \.self){ item in
-                            ChatListItemView(data: item)
+                          
+                            NavigationLink(
+                                destination: {
+                                    Text("Chat Details")
+                                })  {
+                                   
+                                    ChatListItemView(data: item)
+                                }
+                            
+                            
                         }
                         
                         
@@ -55,10 +66,10 @@ struct ChatListScreen:View{
                     
                     
                     Spacer()
-                }
+                }.clipped()
             }
             
-         
+            
             VStack{
                 Spacer()
                 HStack{
@@ -70,11 +81,14 @@ struct ChatListScreen:View{
                 }
             }
         }
+        
         .onAppear{
-            viewModel.getMatchConnection()
-            viewModel.getChatGroupList()
+           
+              viewModel.getMatchConnection()
+              viewModel.getChatGroupList()
             
         }
+        //  }
     }
 }
 
@@ -108,6 +122,14 @@ struct MatchConnectionView : View{
 
 struct ChatListItemView: View {
     var data : ChatListItem
+    private func messageTime (date : Date?) -> String {
+        let formater = DateFormatter()
+        formater.dateFormat = "hh:mm a"
+        if date != nil {
+          return   formater.string(from: date!)
+        }
+        return ""
+    }
     var body: some View{
         VStack(spacing: 0){
             HStack(spacing:0){
@@ -115,29 +137,33 @@ struct ChatListItemView: View {
                     .resizable()
                     .frame(width: 48,height: 48)
                     .padding(.leading,16)
-                VStack(alignment: .leading){
+                VStack(alignment: .leading, spacing: 0){
                     Text(data.name)
                         .font(.system(size: 14,weight: Font.Weight.semibold))
                         .foregroundColor(AppColors.grayScaleBlack)
-                  
-                    Text("Lorem ipsum dolor et sum netsu")
+                        .frame(height: 18)
+                    
+                    Text(data.lastMessageInfo?.lastMessageText ?? "")
                         .font(.system(size: 12,weight: Font.Weight.semibold))
                         .foregroundColor(AppColors.grayScaleBlack)
-                        
+                        .frame(height: 18)
+                    
                 }.padding(.leading,12)
                 
                 
                 Spacer()
                 
-                Text("01:47 PM")
+                Text(messageTime(date: data.lastMessageInfo?.lastMessageSentAt))
                     .font(.system(size: 12,weight: Font.Weight.semibold))
                     .foregroundColor(AppColors.grayScaleBlack)
                     .padding(.trailing,16)
             }
             .padding(.vertical,12)
             Divider()
-                .frame()
+                .padding(.trailing,16)
+                .padding(.leading, 48+16+12)
         }
+        .frame(height: 72)
     }
 }
 
@@ -147,7 +173,7 @@ struct ChatListScreenPreview : PreviewProvider {
             ChatListScreen()
             MatchConnectionView(data: MatchConnection(currentPosition: "ios", connectionId: 0, imageUrl: "String", name: "Sunil", userId: 2, chatGroupId: "String"))
             
-            ChatListItemView(data: ChatListItem(id: "String", currentPosition: "ios", imageUrl: "String", name: "Ram", type: "String", unreadCount: 1, archivedAt: nil, totalUsers: 1))
+            ChatListItemView(data: ChatListItem(id: "String", currentPosition: "ios", imageUrl: "String", name: "Ram", type: Grouptype.group, unreadCount: 1, archivedAt: nil, totalUsers: 1))
         }
     }
 }

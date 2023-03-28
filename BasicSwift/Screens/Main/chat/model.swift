@@ -17,13 +17,27 @@ struct MatchConnection : Decodable, Hashable {
       var isSelected :Bool? = false
 }
 
-struct LastMessageInfo : Decodable, Hashable{
+struct LastMessageInfo : Decodable, Hashable,Encodable{
+    let lastMessageText: String?
     let lastMessageBy: String?
-       let lastMessageSentAt: Date?
-       let lastMessageText: String?
-      // val lastMessageType: ChatMessageCategory?,
-      // @PrimaryKey(autoGenerate = false)
-       var chatId :String?
+    let lastMessageByUserId: Int?
+    var lastMessageSentAt: Date?
+    let lastMessageType :String?
+}
+
+
+enum Grouptype : String ,Hashable, Codable{
+    case  individual, group
+    case unknown
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let value = try container.decode(String.self)
+
+        // Try to initialize Self from value, if
+        // value is not 1, 2, 3, or 4, initialize Self to
+        // the unknown case.
+        self = .init(rawValue: value) ?? .unknown
+    }
 }
 
 struct ChatListItem: Decodable, Hashable{
@@ -31,9 +45,9 @@ struct ChatListItem: Decodable, Hashable{
     let currentPosition: String?
       let imageUrl: String?
     //  @SerializedName("lastMessageInfo")
-     // let lastMessageInfo: LastMessageInfo?
+    var lastMessageInfo : LastMessageInfo?
       let name: String
-      let type: String
+      let type: Grouptype?
       let unreadCount: Int
       let archivedAt : Date?
       //@SerializedName("isBlocked")

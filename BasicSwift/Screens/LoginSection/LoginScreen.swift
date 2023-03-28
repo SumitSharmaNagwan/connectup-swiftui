@@ -44,7 +44,7 @@ struct LoginScreen : View{
                     .font(.system(size: 14,weight: Font.Weight.medium))
                     .padding(16)
             }
-            ButtonSolidGreen(label: "Login") {
+            PrimaryButton(label: "Login",action: {
                 viewModel.loginWithEmailAndPasswod { isLogin in
                     if isLogin {
                         nextScreen(LoginFlowScreen.MainApp)
@@ -52,7 +52,8 @@ struct LoginScreen : View{
                         print("login failed")
                     }
                 }
-            }
+            },
+                        isDisable: false,   buttonColorSolid: ButtonColorSolid.Green )
             .padding(.horizontal,16)
             .padding(.top,32)
             

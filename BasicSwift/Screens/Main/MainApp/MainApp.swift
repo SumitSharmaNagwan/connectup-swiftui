@@ -13,36 +13,39 @@ import SwiftUI
 struct MainApp : View{
     
     var logoutUser : (LoginFlowScreen)->()
-    let mainViewNodel = MainViewModel()
+    @ObservedObject
+    var mainViewNodel = MainViewModel()
     var body: some View{
-        
-        TabView{
-            HomeScreen().tabItem {
-                Image("homeIcon")
-                Text("Home")
+        NavigationView{
+            TabView{
+                HomeScreen().tabItem {
+                    Image("homeIcon")
+                    Text("Home")
+                }
+                SearchScreen().tabItem {
+                    Image("searchIcon")
+                    Text("Search")
+                }
+                ChatListScreen().tabItem {
+                    Image("chatIcon")
+                    Text("Chat")
+                }
+                ProfileScreen(profile: $mainViewNodel.data).tabItem {
+                    Image("profileIcon")
+                    Text("Profile")
+                }
+                MenuScreen(){nextScreen in
+                    logoutUser(nextScreen)
+                }.tabItem {
+                    Image("moreIcon")
+                    Text("Menu")
+                }
+            }.onAppear{
+                mainViewNodel.refreshMyProfile()
             }
-            SearchScreen().tabItem {
-                Image("searchIcon")
-                Text("Search")
-            }
-            ChatListScreen().tabItem {
-                Image("chatIcon")
-                Text("Chat")
-            }
-            ProfileScreen().tabItem {
-                Image("profileIcon")
-                Text("Profile")
-            }
-            MenuScreen(){nextScreen in
-                logoutUser(nextScreen)
-            }.tabItem {
-                Image("moreIcon")
-                Text("Menu")
-            }
-        }.onAppear{
-            mainViewNodel.refreshMyProfile()
+           
+            
         }
-        
     }
 }
 

@@ -24,9 +24,16 @@ struct BasicSwiftApp: App {
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
              */
-            AppRootView()
-                .environmentObject(userInfoEvn)
-                
+            AppRootView().environmentObject(userInfoEvn)
+            
+         
+            /*
+            var url = "https://media.istockphoto.com/id/1346932521/photo/virtual-video-conference-business-meeting.jpg?b=1&s=170667a&w=0&k=20&c=CajphXYbFBefU2j8Q56SDVFd8YkBOD8eruR4pSrr5cM="
+            
+            URLImage(url: url)
+
+               
+            */
         }
     }
     

@@ -9,19 +9,29 @@ import Foundation
 import SwiftUI
 
 struct ProfileScreen:View{
+    @Binding
+    var profile : DataWrapper<MyProfileModel>
+    
+    var url = "https://media.istockphoto.com/id/1346932521/photo/virtual-video-conference-business-meeting.jpg?b=1&s=170667a&w=0&k=20&c=CajphXYbFBefU2j8Q56SDVFd8YkBOD8eruR4pSrr5cM="
     var body: some View{
         VStack(spacing:0){
             HomeAppBar(title: "Your Profile")
             ScrollView{
                
+                
                 Image("profileBG")
                     .resizable()
                     .frame(width: .infinity, height: 178)
                     .padding(.top,16)
                     .padding(.horizontal, 16)
-                Image("user1")
-                    .resizable()
-                    .frame(width: 132, height: 132)
+               URLImage(url: url)
+                    
+              // URLImage(url: profile.data?.profileImageUrl) 
+                   
+                   .frame(width: 132, height: 132)
+                   .cornerRadius(130)
+                    .clipped()
+                
                     .overlay{
                         RoundedRectangle(cornerRadius: 130)
                             .stroke(AppColors.grayScaleWhite, lineWidth: 3)
@@ -29,8 +39,9 @@ struct ProfileScreen:View{
                 
                     .offset(y:-66)
                     .padding(.bottom,-66)
+                 
                 
-                Text("Mathew Robinson")
+                Text(profile.data?.name ?? "")
                     .font(.system(size: 22,weight: Font.Weight.bold))
                     .padding(.top,18)
                     .foregroundColor(AppColors.grayScaleBlack)
@@ -131,13 +142,13 @@ struct ProfileScreen:View{
                 
                 Spacer()
                 
-            }
+            }.clipped()
         }
     }
 }
 
 struct ProfileScreenPreview : PreviewProvider {
     static var previews: some View{
-        ProfileScreen()
+        ProfileScreen(profile: .constant( DataWrapper(data: MyProfileModel(id: 1, name: "String", phone: "String", currentPosition: "String", email: "String", headline: "String", about: "String", profileImageUrl: "String"))))
     }
 }
