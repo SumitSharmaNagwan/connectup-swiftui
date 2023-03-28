@@ -26,12 +26,12 @@ struct ChatApi {
             URLQueryItem(name: "newMatchedOnly", value: "\(newMatchedOnly)")
         ]
         
-        HttpUtility.shared.apiCall(request: nil  , methodType: ChatEndPoints.matchConnection.methodType, endPoint: ChatEndPoints.matchConnection.endPoint, resultType: Array<MatchConnection>.self, completionHandler: completionHandler, query: queryItems)
+      //  HttpUtility.shared.apiCall(request: nil  , methodType: ChatEndPoints.matchConnection.methodType, endPoint: //ChatEndPoints.matchConnection.endPoint, resultType: Array<MatchConnection>.self, completionHandler: completionHandler, query: //queryItems)
     }
     
     func getchatGroupList( completionHandler: @escaping (_ result: Array<ChatListItem>?)-> Void  ){
       
-        HttpUtility.shared.apiCall(request: nil  , methodType: ChatEndPoints.chatGroupsList.methodType, endPoint: ChatEndPoints.chatGroupsList.endPoint, resultType: Array<ChatListItem>.self, completionHandler: completionHandler)
+       // HttpUtility.shared.apiCall(request: nil  , methodType: ChatEndPoints.chatGroupsList.methodType, endPoint: //ChatEndPoints.chatGroupsList.endPoint, resultType: Array<ChatListItem>.self, completionHandler: completionHandler)
     }
 
 }

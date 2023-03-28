@@ -22,13 +22,13 @@ struct UserApiEndPoints {
 struct UserApi {
     
     // completionHandler: @escaping (_ result: T?)-> Void
-    func getUserProfile(completionHandler : @escaping (_ result : MyProfileModel?) -> Void){
+    func getUserProfile(completionHandler : @escaping (_ result : Resourse< MyProfileModel>?) -> Void){
         HttpUtility.shared.apiCall(request: nil, methodType: UserApiEndPoints.userProfile.methodType, endPoint: UserApiEndPoints.userProfile.endPoint, resultType: MyProfileModel.self, completionHandler: completionHandler)
         
     }
     
     func getMyUserInfo(){
-        HttpUtility.shared.apiCall(request: nil, methodType: UserApiEndPoints.userInfo.methodType, endPoint: UserApiEndPoints.userInfo.endPoint, resultType: String.self){result in }
+     //   HttpUtility.shared.apiCall(request: nil, methodType: UserApiEndPoints.userInfo.methodType, endPoint: //UserApiEndPoints.userInfo.endPoint, resultType: String.self){result in }
         
     }
     

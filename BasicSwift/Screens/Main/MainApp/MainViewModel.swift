@@ -19,8 +19,23 @@ class MainViewModel : ObservableObject{
     
     func refreshMyProfile(){
         userApi.getUserProfile { result in
-            print(result?.name)
-            self.data.data = result
+            
+            switch (result?.status){
+            case .Loading :
+                print("flowTest loading")
+                
+            case .Success :
+                print("flowTest success")
+                print(result?.data?.name)
+                self.data.data = result?.data
+                
+            case .Error :
+                print("flowTest error")
+                
+            case .none:
+                "flowTest : none "
+            }
+           
         }
     }
     

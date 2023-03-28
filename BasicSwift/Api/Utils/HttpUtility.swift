@@ -9,6 +9,29 @@ import Foundation
 import FirebaseAuth
 import Firebase
 
+enum NetworkStatus {
+   case Loading, Success, Error
+}
+
+class Resourse <T>{
+    var status : NetworkStatus? = nil
+    var data : T? = nil
+    //var error :
+    func loading () -> Resourse<T>{
+        status = NetworkStatus.Loading
+        return self
+    }
+    func success(apiData: T)-> Resourse<T> {
+        data = apiData
+        status = .Success
+        return self
+    }
+    func error() -> Resourse<T> {
+        status = .Error
+        return self
+    }
+}
+
 enum MethodType: String{
     case  post,get,put,delete
 }
@@ -16,39 +39,42 @@ final class HttpUtility{
     static let shared = HttpUtility()
     private init(){}
     
-    private func postData<T:Decodable>(request : URLRequest, resultType:T.Type, completionHandler: @escaping (_ result: T?)-> Void){
+    private func postData<T:Decodable>(request : URLRequest, resultType:T.Type, completionHandler: @escaping (_ result: Resourse<T>?)-> Void){
+        var jsonDecoder = JSONDecoder()
+        let format = DateFormatter()
+        format.dateFormat =     "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        jsonDecoder.dateDecodingStrategy = .formatted(format)
         
-        DispatchQueue.main.async {
-            
-        URLSession.shared.dataTask(with: request){data, response, error in
-            print(error)
-            print(response)
-            print("JSON String: \(String(data: data!, encoding: .utf8))")
-            
-            
-            if(error == nil && data != nil){
+        completionHandler(Resourse().loading())
+        URLSession.shared.dataTaskPublisher(for: request)
+        
+            .subscribe(on: DispatchQueue.global(qos: .background))
+            .receive(on: DispatchQueue.main )
+        
+            .tryMap{ (data, response) -> Data in
                 
-                do{
-                    var jsonDecoder = JSONDecoder()
-                    let format = DateFormatter()
-                    format.dateFormat =     "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-                    jsonDecoder.dateDecodingStrategy = .formatted(format)
-                    let response =  try jsonDecoder.decode(resultType.self, from: data!)
-                    
-                    
-                    completionHandler(response)
+                
+                print(response)
+                print("JSON String: \(String(data: data, encoding: .utf8))")
+                guard
+                    let response = response as? HTTPURLResponse,
+                    response.statusCode >= 200 && response.statusCode < 300 else {
+                    completionHandler(Resourse().error())
+                    throw URLError(.badServerResponse)
                 }
-                catch {
-                    
-                }
-            }
             
-        }.resume()
-        
-    }
+                return data
+            }
+            .decode(type: resultType.self, decoder: jsonDecoder)
+            .sink { _ in
+                
+            } receiveValue: { (data) in
+                completionHandler(Resourse().success(apiData: data))
+            }
+    
     }
     
-    func apiCall<ResultType: Decodable>(request: Encodable?, methodType: MethodType, endPoint : String, resultType: ResultType.Type , completionHandler: @escaping (_ result: ResultType?)-> Void , query : Array<URLQueryItem>? = nil){
+    func apiCall<ResultType: Decodable>(request: Encodable?, methodType: MethodType, endPoint : String, resultType: ResultType.Type , completionHandler: @escaping (_ result: Resourse<ResultType>? )-> Void , query : Array<URLQueryItem>? = nil){
         
         let url = Constant.BASE_URL_DEV + endPoint
         var urlComponent = URLComponents(string: url)
