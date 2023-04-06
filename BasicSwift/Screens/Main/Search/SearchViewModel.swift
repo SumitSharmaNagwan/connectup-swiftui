@@ -22,6 +22,10 @@ final class SearchViewModel : ObservableObject{
         }
     }
     private var searchCallback  = Set<AnyCancellable>()
+    @Published
+    var loaderState = LoaderState()
+    @Published var subscreen = ScreenSubView.Main
+    @Published var errorStatus = ErrorStatus(errorType: nil, message: nil, error: nil, serverErrorResponse: nil)
 
     init(){
         $searchText.sink { String in
@@ -30,7 +34,19 @@ final class SearchViewModel : ObservableObject{
         loadUser(isClearList: false)
     }
     
+    func handleError(error : Subscribers.Completion<ErrorStatus>){
+        loaderState.isHide()
+        switch error {
+        case .failure (let errorState) :
+            print("")
+        
+        case.finished :
+            print(" ")
+        }
+    }
+    
     func loadUser(isClearList : Bool){
+        loaderState.show()
         if isClearList {
             userList.removeAll()
         }
@@ -43,19 +59,20 @@ final class SearchViewModel : ObservableObject{
             limit: limit,
             page: page
         )
-        recommendUserApi.searchUser(searchUserRequest: searchUserRequest) { list in
-            if limit == list?.count{
-                self.page = self.page + 1
-            }
-            if list != nil {
-                DispatchQueue.main.async {
-                
-                    self.userList.append(contentsOf: list!)
+        recommendUserApi.searchUser(searchUserRequest: searchUserRequest)
+            .sink {[weak self] error in
+                self?.handleError(error: error)
+            } receiveValue: { [weak self] list in
+                self?.loaderState.isHide()
+                if limit == list.count{
+                    self?.page += 1
                 }
-               
+                    DispatchQueue.main.async {
+                    
+                        self?.userList.append(contentsOf: list)
+                    }
             }
-        
-        }
+            .store(in: &searchCallback)
     }
     
 }

@@ -17,7 +17,8 @@ class ChatViewModel : ObservableObject {
    @Published
     var chatGroupList = Array<ChatListItem>()
     
-    @Published var isShowLoader = false
+   // @Published var isShowLoader = false
+    @Published var loaderState = LoaderState()
     @Published var screenSubView : ScreenSubView = ScreenSubView.Main
     @Published var errorStatus = ErrorStatus(errorType: nil, message: nil, error: nil, serverErrorResponse: nil)
     var disposeBag = Set<AnyCancellable>()
@@ -28,8 +29,19 @@ class ChatViewModel : ObservableObject {
     
     func getMatchConnection(){
         
+        loaderState.show()
+        chatApi.matchConnection( newMatchedOnly: true)
         
-        chatApi.matchConnection( newMatchedOnly: true) { result in
+            .sink { [weak self] error in
+                self?.errorHandling(completion: error)
+            } receiveValue: { [weak self] list in
+                self?.loaderState.isHide()
+                self?.matchConnection.append(contentsOf: list)
+            }
+            .store(in: &disposeBag)
+
+        /*
+        { result in
             print(result)
             if result != nil {
                 print("matchCount = \(self.matchConnection.count)")
@@ -37,10 +49,11 @@ class ChatViewModel : ObservableObject {
                 print("matchCount = \(self.matchConnection.count)")
             }
         }
+        */
     }
     
     private func errorHandling(completion: Subscribers.Completion<ErrorStatus>) {
-        isShowLoader  = false
+        loaderState.isHide()
         switch completion {
         case .failure(let error):
             print("error")
@@ -52,13 +65,13 @@ class ChatViewModel : ObservableObject {
     }
     
     func getChatGroupList(){
-        self.isShowLoader = true
+        self.loaderState.show()
         chatApi.getchatGroupList()
             .sink { [weak self] error in
-                self?.isShowLoader = false
+                
                 self?.errorHandling(completion: error)
             } receiveValue: { [weak self] chatList in
-                self?.isShowLoader = false
+                self?.loaderState.isHide()
                
                 print("chatListSize 51 vm  \(self)")
             

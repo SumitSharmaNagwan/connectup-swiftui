@@ -8,7 +8,7 @@
 import Foundation
 import Firebase
 import GoogleSignIn
-
+import Combine
 
 
 
@@ -42,15 +42,63 @@ class SignUpViewModel: ObservableObject{
     @Published var email  = ""
     @Published var password  = ""
     @Published var isShowLoader = false
+    @Published var  loaderState = LoaderState()
     @Published var screenSubView : ScreenSubView = ScreenSubView.Main
     @Published var errorStatus = ErrorStatus(errorType: nil, message: nil, error: nil, serverErrorResponse: nil)
+    var cancellable = Set<AnyCancellable>()
+   
     
+    private func errorHandle(error : Subscribers.Completion<ErrorStatus>){
+        self.loaderState.isHide()
+        
+        switch error {
+        case .failure(let errorStatus):
+            let type =  errorStatus.errorType
+            switch type {
+            case .Unauthorized :
+                
+                break
+            case .BadRequest :
+                
+                self.screenSubView = ScreenSubView.InvalidInputPopup
+                break
+                
+            default :
+                break
+            }
+            print("")
+            
+        case .finished:
+            print(" ")
+        
+        }
+
+    }
     
     func loginWithEmailAndPasswod(onLogin : @escaping (Bool)->()){
-        
+        loaderState.show()
         let loginWithAuthRequest = LoginWithAuthRequest(appVersion: "String", fcmToken: "String", modelName: "String", osVersion: "String" ,token: "",email: self.email,password: self.password)
         
-        self.loginApi.loginWithGoogle(loginWithAuthRequest: loginWithAuthRequest){result in
+        self.loginApi.loginWithGoogle(loginWithAuthRequest: loginWithAuthRequest)
+            .sink { error in
+                error
+            } receiveValue: { [weak self]  result in
+                let ct = result.customToken
+                 
+                 Auth.auth().signIn(withCustomToken: ct) { AuthDataResult, error1 in
+                    let user = AuthDataResult?.user
+                    
+                     if user != nil{
+                         onLogin(true)
+                     }
+                     self?.loaderState.isHide()
+                 }
+            }
+            .store(in: &cancellable)
+
+        
+        /*
+        {result in
             print(result)
             
             switch result?.status {
@@ -106,6 +154,8 @@ class SignUpViewModel: ObservableObject{
             }
             
         }
+        
+        */
     }
     
     func signUpWithGoogle( onLogin: @escaping (Bool)->()){
@@ -149,10 +199,28 @@ class SignUpViewModel: ObservableObject{
         currentUser?.getIDTokenResult(forcingRefresh: true, completion: { tokenResult, error in
             let token = "Bearer "+(tokenResult?.token ?? "" )
             print(tokenResult?.token)
-            
+            self.loaderState.show()
             let loginWithAuthRequest = LoginWithAuthRequest(appVersion: "String", fcmToken: "String", modelName: "String", osVersion: "String" ,token: token)
             
-            self.loginApi.loginWithGoogle(loginWithAuthRequest: loginWithAuthRequest){result in
+            self.loginApi.loginWithGoogle(loginWithAuthRequest: loginWithAuthRequest)
+                .sink { [weak self] error in
+                    self?.errorHandle(error: error)
+                } receiveValue: { [weak self] result in
+                    let ct = result.customToken
+                    self?.loaderState.isHide()
+                     Auth.auth().signIn(withCustomToken: ct) { AuthDataResult, error1 in
+                        let user = AuthDataResult?.user
+                        
+                         if user != nil{
+                             onLogin(true)
+                         }
+                     }
+                }
+                .store(in: &self.cancellable)
+
+            
+            /*
+            {result in
                 print(result)
                 switch result?.status {
                 case .Loading :
@@ -182,6 +250,7 @@ class SignUpViewModel: ObservableObject{
                 }
             }
             
+            */
             
         })
     }

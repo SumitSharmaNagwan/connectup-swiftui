@@ -21,13 +21,13 @@ struct ChatEndPoints {
 struct ChatApi {
     
     
-    func matchConnection(newMatchedOnly:Bool, completionHandler: @escaping (_ result: Array<MatchConnection>?)-> Void  ){
+    func matchConnection(newMatchedOnly:Bool) -> PassthroughSubject<Array<MatchConnection>, ErrorStatus> {
         
         let queryItems = [
             URLQueryItem(name: "newMatchedOnly", value: "\(newMatchedOnly)")
         ]
         
-      //  HttpUtility.shared.apiCall(request: nil  , methodType: ChatEndPoints.matchConnection.methodType, endPoint: //ChatEndPoints.matchConnection.endPoint, resultType: Array<MatchConnection>.self, completionHandler: completionHandler, query: //queryItems)
+      return  HttpUtility.shared.apiCall(request: nil  , methodType: ChatEndPoints.matchConnection.methodType, endPoint: ChatEndPoints.matchConnection.endPoint, resultType: Array<MatchConnection>.self, query: queryItems)
     }
     
     func getchatGroupList() -> PassthroughSubject<Array<ChatListItem>,ErrorStatus> {

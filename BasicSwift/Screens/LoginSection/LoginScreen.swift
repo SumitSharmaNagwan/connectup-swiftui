@@ -16,8 +16,9 @@ struct LoginScreen : View{
     @ObservedObject
     var viewModel = SignUpViewModel()
     var nextScreen : ( LoginFlowScreen) ->()
+   
     var body : some View{
-        ScreenView(isShowLoader: $viewModel.isShowLoader, screenSubView: $viewModel.screenSubView, errorStatus: $viewModel.errorStatus) {
+        ScreenView(loaderState: viewModel.loaderState, screenSubView: $viewModel.screenSubView, errorStatus: $viewModel.errorStatus) {
         VStack(spacing:0){
             LoginAppBar()
             Group{

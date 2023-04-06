@@ -15,91 +15,97 @@ enum SearchTab : String {
 
 struct SearchScreen:View{
     @ObservedObject var searchViewModel = SearchViewModel()
-   // @State
-   // var currentTab = SearchTab.Online
+    // @State
+    // var currentTab = SearchTab.Online
     var body: some View{
-        VStack(spacing: 0){
-           
+        
+        ScreenView(loaderState: searchViewModel.loaderState, screenSubView: $searchViewModel.subscreen , errorStatus: $searchViewModel.errorStatus ){
             
-            HomeAppBar(title: "Search")
-            SearchView(searchText: $searchViewModel.searchText)
-                .padding(.horizontal,16)
-                .padding(.top,16)
-                .onReceive(searchViewModel.$searchText) { v in
-                  
-                    print(v)
-                }
             
-          
-            Group{
+            VStack(spacing: 0){
                 
-                HStack(alignment: .firstTextBaseline){
-                    Spacer()
-                    SearchTabItem(currentTab: searchViewModel.curruntSearchTab, tabName: SearchTab.Newest)
-                        .onTapGesture {
-                            searchViewModel.curruntSearchTab = SearchTab.Newest
-                            searchViewModel.page = 0
-                            searchViewModel.loadUser(isClearList: true)
-
-                        }
-                        .frame(width: 100)
-                    Spacer()
-                    SearchTabItem(currentTab: searchViewModel.curruntSearchTab, tabName: SearchTab.Online)
-                        .onTapGesture {
-                            searchViewModel.curruntSearchTab = SearchTab.Online
-                            searchViewModel.page = 0
-                            searchViewModel.loadUser(isClearList: true)
-
-                        }
-                        .frame(width: 100)
-                    Spacer()
-                    SearchTabItem(currentTab: searchViewModel.curruntSearchTab, tabName: SearchTab.Verified)
-                        .onTapGesture {
-                            searchViewModel.curruntSearchTab = SearchTab.Verified
-                            searchViewModel.page = 0
-                            searchViewModel.loadUser(isClearList: true)
-
-                        }
-                        .frame(width: 100)
-                    Spacer()
-                }
-                Divider()
-                    .frame(width: .infinity, height: 1)
-                    .background(AppColors.grayScaleGray2)
-                    .offset(y:-1)
-                    .zIndex(-8)
                 
-                // user list
+                HomeAppBar(title: "Search")
+                SearchView(searchText: $searchViewModel.searchText)
+                    .padding(.horizontal,16)
+                    .padding(.top,16)
+                    .onReceive(searchViewModel.$searchText) { v in
+                        
+                        print(v)
+                    }
                 
-                let data = (1...100).map { "Item \($0)" }
-
-                   let columns = [
-                    GridItem(.flexible()),
-                    GridItem(.flexible())
-                   ]
                 
-                ScrollView{
-                    LazyVGrid(columns: columns , spacing: 0){
-                       
-                        ForEach(searchViewModel.userList, id : \.self){ item in
+                Group{
+                    
+                    HStack(alignment: .firstTextBaseline){
+                        Spacer()
+                        SearchTabItem(currentTab: searchViewModel.curruntSearchTab, tabName: SearchTab.Newest)
+                            .onTapGesture {
+                                searchViewModel.curruntSearchTab = SearchTab.Newest
+                                searchViewModel.page = 0
+                                searchViewModel.loadUser(isClearList: true)
+                                
+                            }
+                            .frame(width: 100)
+                        Spacer()
+                        SearchTabItem(currentTab: searchViewModel.curruntSearchTab, tabName: SearchTab.Online)
+                            .onTapGesture {
+                                searchViewModel.curruntSearchTab = SearchTab.Online
+                                searchViewModel.page = 0
+                                searchViewModel.loadUser(isClearList: true)
+                                
+                            }
+                            .frame(width: 100)
+                        Spacer()
+                        SearchTabItem(currentTab: searchViewModel.curruntSearchTab, tabName: SearchTab.Verified)
+                            .onTapGesture {
+                                searchViewModel.curruntSearchTab = SearchTab.Verified
+                                searchViewModel.page = 0
+                                searchViewModel.loadUser(isClearList: true)
+                                
+                            }
+                            .frame(width: 100)
+                        Spacer()
+                    }
+                    Divider()
+                        .frame(width: .infinity, height: 1)
+                        .background(AppColors.grayScaleGray2)
+                        .offset(y:-1)
+                        .zIndex(-8)
+                    
+                    // user list
+                    
+                    let data = (1...100).map { "Item \($0)" }
+                    
+                    let columns = [
+                        GridItem(.flexible()),
+                        GridItem(.flexible())
+                    ]
+                    
+                    ScrollView{
+                        LazyVGrid(columns: columns , spacing: 0){
                             
-                            SearchViewItem(searchViewModel: item, isVerified: searchViewModel.curruntSearchTab.rawValue == SearchTab.Verified.rawValue)
-                            
+                            ForEach(searchViewModel.userList, id : \.self){ item in
+                                
+                                SearchViewItem(searchViewModel: item, isVerified: searchViewModel.curruntSearchTab.rawValue == SearchTab.Verified.rawValue)
+                                
+                            }
                         }
                     }
+                    .frame(minHeight: 200,maxHeight: .infinity)
+                    .padding(.horizontal,8)
+                    
+                    
+                    
+                    
+                    
                 }
-                .frame(minHeight: 200,maxHeight: .infinity)
-                                .padding(.horizontal,8)
-                                
-                
-               
                 
                 
+                Spacer()
             }
-            
-            
-            Spacer()
         }
+        
     }
 }
 

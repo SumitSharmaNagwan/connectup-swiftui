@@ -13,7 +13,7 @@ struct ChatListScreen:View{
     var viewModel = ChatViewModel()
     var body: some View{
         //  NavigationView{
-        ScreenView(isShowLoader: $viewModel.isShowLoader, screenSubView: $viewModel.screenSubView, errorStatus: $viewModel.errorStatus){
+        ScreenView(loaderState: viewModel.loaderState, screenSubView: $viewModel.screenSubView, errorStatus: $viewModel.errorStatus){
         ZStack{
             VStack(spacing: 0){
                 HomeAppBar(title: "Chat")

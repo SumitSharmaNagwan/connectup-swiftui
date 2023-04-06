@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 struct SearchUserRequest : Encodable{
     let onlineOnly: Bool
@@ -23,7 +24,8 @@ struct RecommendationEndPoints {
 
 struct RecommendationApi {
     
-    func searchUser(searchUserRequest: SearchUserRequest, completionHandler: @escaping (_ result: Array<SearchUserModel>?)-> Void  ){
-       // HttpUtility.shared.apiCall(request: searchUserRequest  , methodType: RecommendationEndPoints.searchUser.methodType, endPoint: //RecommendationEndPoints.searchUser.endPoint, resultType: Array<SearchUserModel>.self, completionHandler: completionHandler)
+    func searchUser(searchUserRequest: SearchUserRequest) -> PassthroughSubject<Array<SearchUserModel>, ErrorStatus >{
+      
+       return HttpUtility.shared.apiCall(request: searchUserRequest  , methodType: RecommendationEndPoints.searchUser.methodType, endPoint: RecommendationEndPoints.searchUser.endPoint, resultType: Array<SearchUserModel>.self )
     }
 }
