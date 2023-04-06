@@ -9,10 +9,11 @@ import Foundation
 import SwiftUI
 
 struct ChatListScreen:View{
-    @ObservedObject
+    @StateObject
     var viewModel = ChatViewModel()
     var body: some View{
         //  NavigationView{
+        ScreenView(isShowLoader: $viewModel.isShowLoader, screenSubView: $viewModel.screenSubView, errorStatus: $viewModel.errorStatus){
         ZStack{
             VStack(spacing: 0){
                 HomeAppBar(title: "Chat")
@@ -34,6 +35,9 @@ struct ChatListScreen:View{
                                     .padding(.leading,16)
                             }
                         }
+                        .onAppear{
+                            
+                        }
                         
                     }
                     
@@ -43,23 +47,31 @@ struct ChatListScreen:View{
                         .frame(minWidth: 0,maxWidth: .infinity,alignment: .leading)
                         .padding(.leading,16)
                         .font(.system(size: 14,weight: Font.Weight.semibold))
+                        .onReceive(viewModel.$chatGroupList) { list in
+                        print( "chatListSize  \(list.count)")
+                    }
                     
                     
                     LazyVStack(spacing:0){
                         ForEach(viewModel.chatGroupList,id: \.self){ item in
-                          
+                            
                             NavigationLink(
                                 destination: {
                                     Text("Chat Details")
                                 })  {
-                                   
+                                    
                                     ChatListItemView(data: item)
+                                        
+                                        . onAppear{ print(item.id) }
                                 }
                             
                             
                         }
                         
                         
+                    }
+                    .onAppear{
+                        self.viewModel.getChatGroupList()
                     }
                     
                     
@@ -83,11 +95,12 @@ struct ChatListScreen:View{
         }
         
         .onAppear{
-           
-              viewModel.getMatchConnection()
-              viewModel.getChatGroupList()
+            
+            self.viewModel.getMatchConnection()
+        
             
         }
+    }
         //  }
     }
 }

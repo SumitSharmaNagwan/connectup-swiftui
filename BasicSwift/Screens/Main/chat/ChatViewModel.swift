@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 class ChatViewModel : ObservableObject {
     let chatApi = ChatApi()
@@ -15,6 +16,15 @@ class ChatViewModel : ObservableObject {
     var matchConnection = Array<MatchConnection>()
    @Published
     var chatGroupList = Array<ChatListItem>()
+    
+    @Published var isShowLoader = false
+    @Published var screenSubView : ScreenSubView = ScreenSubView.Main
+    @Published var errorStatus = ErrorStatus(errorType: nil, message: nil, error: nil, serverErrorResponse: nil)
+    var disposeBag = Set<AnyCancellable>()
+     
+    deinit {
+        print("chatListSize  deinit .....")
+    }
     
     func getMatchConnection(){
         
@@ -29,19 +39,64 @@ class ChatViewModel : ObservableObject {
         }
     }
     
+    private func errorHandling(completion: Subscribers.Completion<ErrorStatus>) {
+        isShowLoader  = false
+        switch completion {
+        case .failure(let error):
+            print("error")
+           // errorMessage = error.errorDescription ?? ""
+            // isError = true
+        case .finished:
+            print("Publisher is finished")
+        }
+    }
+    
     func getChatGroupList(){
-        
-        chatApi.getchatGroupList{ result in
-            print(result)
-            if result != nil {
-                result?.forEach({ ChatListItem in
-                    print(ChatListItem.type)
-                    print(ChatListItem.type?.rawValue)
+        self.isShowLoader = true
+        chatApi.getchatGroupList()
+            .sink { [weak self] error in
+                self?.isShowLoader = false
+                self?.errorHandling(completion: error)
+            } receiveValue: { [weak self] chatList in
+                self?.isShowLoader = false
                
-                })
-                self.chatGroupList.append(contentsOf: result!)
+                print("chatListSize 51 vm  \(self)")
+            
+                self?.chatGroupList.append(contentsOf: chatList)
+             
+            }
+            .store(in: &disposeBag)
+
+        
+        /*
+        chatApi.getchatGroupList{ [weak self] result in
+            print(result)
+            switch result?.status {
+            case .Loading :
+                self?.isShowLoader = true
+                break
+            case .Success :
+                self?.isShowLoader = false
+                result?.data?.forEach({ ChatListItem in
+                        print(ChatListItem.type)
+                        print(ChatListItem.type?.rawValue)
+                        
+                    })
+                print("chatListSize 51 vm  \(self)")
+               
+                self?.chatGroupList.append(contentsOf: (result?.data!)!)
+                print("chatListSize 54 vm  \(self)  \(result?.data?.count)")
+                break
+                
+              case .Error:
+                self?.isShowLoader = false
+                    break
+                
+             case .none: break
+                        
             }
         }
+        */
     }
     
 }

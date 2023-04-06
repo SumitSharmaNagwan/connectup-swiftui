@@ -10,6 +10,8 @@ import Firebase
 import GoogleSignIn
 
 
+
+
 struct LoginWithAuthRequest : Encodable{
    
     var appVersion: String = ""
@@ -39,30 +41,70 @@ class SignUpViewModel: ObservableObject{
     @Published var isLogin : Bool = false
     @Published var email  = ""
     @Published var password  = ""
+    @Published var isShowLoader = false
+    @Published var screenSubView : ScreenSubView = ScreenSubView.Main
+    @Published var errorStatus = ErrorStatus(errorType: nil, message: nil, error: nil, serverErrorResponse: nil)
     
     
     func loginWithEmailAndPasswod(onLogin : @escaping (Bool)->()){
+        
         let loginWithAuthRequest = LoginWithAuthRequest(appVersion: "String", fcmToken: "String", modelName: "String", osVersion: "String" ,token: "",email: self.email,password: self.password)
         
         self.loginApi.loginWithGoogle(loginWithAuthRequest: loginWithAuthRequest){result in
             print(result)
-            if result != nil{
-               let ct = result?.customToken
+            
+            switch result?.status {
+            case .Loading :
+               
+                self.isShowLoader = true
+                break
+            case .Success :
+                let ct = result?.data?.customToken
+                 
+                 Auth.auth().signIn(withCustomToken: ct!) { AuthDataResult, error1 in
+                    let user = AuthDataResult?.user
+                    
+                     if user != nil{
+                         onLogin(true)
+                     }
+                     
+                     print(AuthDataResult)
+                     
+                     print(error1)
+                     self.isShowLoader = false
+                 }
                 
-                Auth.auth().signIn(withCustomToken: ct!) { AuthDataResult, error1 in
-                   let user = AuthDataResult?.user
-                   
-                    if user != nil{
-                        onLogin(true)
+            case .Error :
+                self.isShowLoader = false
+                if result?.error != nil{
+                    self.errorStatus = (result?.error)!
+                    let type =  self.errorStatus.errorType
+                    switch type {
+                    case .Unauthorized :
+                        
+                        break
+                    case .BadRequest :
+                        
+                        self.screenSubView = ScreenSubView.InvalidInputPopup
+                        break
+                        
+                    default :
+                        break
                     }
+                        
                     
-                    print(AuthDataResult)
                     
-                    print(error1)
+                    
                 }
-                    
-                
+                self.screenSubView = ScreenSubView.InvalidInputPopup
+                break
+                     
+                 
+            case .none:
+                self.isShowLoader = false
+                break
             }
+            
         }
     }
     
@@ -112,21 +154,31 @@ class SignUpViewModel: ObservableObject{
             
             self.loginApi.loginWithGoogle(loginWithAuthRequest: loginWithAuthRequest){result in
                 print(result)
-                if result != nil{
-                   let ct = result?.customToken
+                switch result?.status {
+                case .Loading :
+                    break
+                case .Success :
+                    let ct = result?.data?.customToken
+                     
+                     Auth.auth().signIn(withCustomToken: ct!) { AuthDataResult, error1 in
+                        let user = AuthDataResult?.user
+                        
+                         if user != nil{
+                             onLogin(true)
+                         }
+                         
+                         print(AuthDataResult)
+                         
+                         print(error1)
+                     }
                     
-                    Auth.auth().signIn(withCustomToken: ct!) { AuthDataResult, error1 in
-                       let name = AuthDataResult?.user.displayName
-                        if name != nil{
-                            onLogin(true)
-                        }
-                        
-                        print(AuthDataResult)
-                        
-                        print(error1)
-                    }
-                        
+                case .Error :
                     
+                    break
+                         
+                     
+                case .none:
+                    break
                 }
             }
             

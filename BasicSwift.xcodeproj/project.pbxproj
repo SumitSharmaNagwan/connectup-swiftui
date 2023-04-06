@@ -29,6 +29,9 @@
 		F144B08529C9E57E00F1170E /* ChatApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = F144B08429C9E57E00F1170E /* ChatApi.swift */; };
 		F144B08729C9E98400F1170E /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F144B08629C9E98400F1170E /* ChatViewModel.swift */; };
 		F144B08929CAE4B600F1170E /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F144B08829CAE4B600F1170E /* ImageView.swift */; };
+		F1B3C6BA29DAE13100646AC8 /* ScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B3C6B929DAE13100646AC8 /* ScreenView.swift */; };
+		F1B3C6BC29DC239600646AC8 /* Dropdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B3C6BB29DC239600646AC8 /* Dropdown.swift */; };
+		F1BC444229D5897B002FF836 /* example.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BC444129D5897B002FF836 /* example.swift */; };
 		F1C8957B29CB2800006744FC /* extra.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C8957A29CB2800006744FC /* extra.swift */; };
 		F1D2724829CDA7FC008F8BFB /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D2724729CDA7FC008F8BFB /* ButtonStyle.swift */; };
 		F1D27F8029BF04B40084215A /* BasicSwiftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D27F7F29BF04B40084215A /* BasicSwiftApp.swift */; };
@@ -57,6 +60,7 @@
 		F1D27FD629C098970084215A /* AppBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D27FD529C098970084215A /* AppBar.swift */; };
 		F1D27FD829C0A3980084215A /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D27FD729C0A3980084215A /* Buttons.swift */; };
 		F1D27FDA29C19CDC0084215A /* Welcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D27FD929C19CDC0084215A /* Welcome.swift */; };
+		F1FDD75029D6D64100C8FC32 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FDD74F29D6D64100C8FC32 /* Loader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +103,9 @@
 		F144B08429C9E57E00F1170E /* ChatApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatApi.swift; sourceTree = "<group>"; };
 		F144B08629C9E98400F1170E /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		F144B08829CAE4B600F1170E /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
+		F1B3C6B929DAE13100646AC8 /* ScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenView.swift; sourceTree = "<group>"; };
+		F1B3C6BB29DC239600646AC8 /* Dropdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dropdown.swift; sourceTree = "<group>"; };
+		F1BC444129D5897B002FF836 /* example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = example.swift; sourceTree = "<group>"; };
 		F1C8957A29CB2800006744FC /* extra.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extra.swift; sourceTree = "<group>"; };
 		F1D2724729CDA7FC008F8BFB /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 		F1D27F7C29BF04B40084215A /* BasicSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BasicSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,6 +133,7 @@
 		F1D27FD529C098970084215A /* AppBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBar.swift; sourceTree = "<group>"; };
 		F1D27FD729C0A3980084215A /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		F1D27FD929C19CDC0084215A /* Welcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Welcome.swift; sourceTree = "<group>"; };
+		F1FDD74F29D6D64100C8FC32 /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,6 +230,14 @@
 			path = chat;
 			sourceTree = "<group>";
 		};
+		F1BC444029D5895F002FF836 /* combine */ = {
+			isa = PBXGroup;
+			children = (
+				F1BC444129D5897B002FF836 /* example.swift */,
+			);
+			path = combine;
+			sourceTree = "<group>";
+		};
 		F1D27F7329BF04B40084215A = {
 			isa = PBXGroup;
 			children = (
@@ -245,6 +261,7 @@
 		F1D27F7E29BF04B40084215A /* BasicSwift */ = {
 			isa = PBXGroup;
 			children = (
+				F1BC444029D5895F002FF836 /* combine */,
 				F126E84C29C452A5005029DF /* Api */,
 				F1D27FB629BF40CD0084215A /* AppRoot.swift */,
 				F1D27FD029C08BCE0084215A /* Screens */,
@@ -298,6 +315,9 @@
 				F144B08829CAE4B600F1170E /* ImageView.swift */,
 				F1C8957A29CB2800006744FC /* extra.swift */,
 				F1D2724729CDA7FC008F8BFB /* ButtonStyle.swift */,
+				F1FDD74F29D6D64100C8FC32 /* Loader.swift */,
+				F1B3C6B929DAE13100646AC8 /* ScreenView.swift */,
+				F1B3C6BB29DC239600646AC8 /* Dropdown.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -486,10 +506,12 @@
 			files = (
 				F1D2724829CDA7FC008F8BFB /* ButtonStyle.swift in Sources */,
 				F126E85129C4530A005029DF /* HttpUtility.swift in Sources */,
+				F1B3C6BC29DC239600646AC8 /* Dropdown.swift in Sources */,
 				F1D27FCF29C06C180084215A /* Application.swift in Sources */,
 				F126E84929C33B34005029DF /* ProfileScreen.swift in Sources */,
 				F126E84B29C33B47005029DF /* MenuScreen.swift in Sources */,
 				F1D27FDA29C19CDC0084215A /* Welcome.swift in Sources */,
+				F1B3C6BA29DAE13100646AC8 /* ScreenView.swift in Sources */,
 				F126E84529C33AF8005029DF /* ChatList.swift in Sources */,
 				F144B08529C9E57E00F1170E /* ChatApi.swift in Sources */,
 				F1D27FD429C0940B0084215A /* Colors.swift in Sources */,
@@ -504,6 +526,7 @@
 				F144B07629C8532600F1170E /* Model.swift in Sources */,
 				F1D27F8C29BF04B60084215A /* BasicSwift.xcdatamodeld in Sources */,
 				F144B08329C9E4D100F1170E /* model.swift in Sources */,
+				F1BC444229D5897B002FF836 /* example.swift in Sources */,
 				F144B07829C88BB000F1170E /* RecommendationApi.swift in Sources */,
 				F144B07B29C88E4600F1170E /* SearchViewModel.swift in Sources */,
 				F1D27FD629C098970084215A /* AppBar.swift in Sources */,
@@ -522,6 +545,7 @@
 				F144B08029C99B0200F1170E /* Model1.swift in Sources */,
 				F126E83D29C1D443005029DF /* InputText.swift in Sources */,
 				F144B08729C9E98400F1170E /* ChatViewModel.swift in Sources */,
+				F1FDD75029D6D64100C8FC32 /* Loader.swift in Sources */,
 				F144B07229C8471C00F1170E /* AppData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

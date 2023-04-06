@@ -28,6 +28,7 @@ struct AppColors{
     static let redButtonDisable = Color("redButtonDisable")
     static let redButtenPressed = Color("redButtenPressed")
     static let screenBackGround = Color.white
+    static let loaderBackground = Color("loaderBackground")
     
     
 }

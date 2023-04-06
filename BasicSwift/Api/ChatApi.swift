@@ -8,6 +8,7 @@
 import Foundation
 import Foundation
 import SwiftUI
+import Combine
 
 
 
@@ -29,9 +30,9 @@ struct ChatApi {
       //  HttpUtility.shared.apiCall(request: nil  , methodType: ChatEndPoints.matchConnection.methodType, endPoint: //ChatEndPoints.matchConnection.endPoint, resultType: Array<MatchConnection>.self, completionHandler: completionHandler, query: //queryItems)
     }
     
-    func getchatGroupList( completionHandler: @escaping (_ result: Array<ChatListItem>?)-> Void  ){
+    func getchatGroupList() -> PassthroughSubject<Array<ChatListItem>,ErrorStatus> {
       
-       // HttpUtility.shared.apiCall(request: nil  , methodType: ChatEndPoints.chatGroupsList.methodType, endPoint: //ChatEndPoints.chatGroupsList.endPoint, resultType: Array<ChatListItem>.self, completionHandler: completionHandler)
+      return  HttpUtility.shared.apiCall(request: nil  , methodType: ChatEndPoints.chatGroupsList.methodType, endPoint: ChatEndPoints.chatGroupsList.endPoint, resultType: Array<ChatListItem>.self )
     }
 
 }

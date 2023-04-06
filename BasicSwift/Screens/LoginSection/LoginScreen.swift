@@ -17,6 +17,7 @@ struct LoginScreen : View{
     var viewModel = SignUpViewModel()
     var nextScreen : ( LoginFlowScreen) ->()
     var body : some View{
+        ScreenView(isShowLoader: $viewModel.isShowLoader, screenSubView: $viewModel.screenSubView, errorStatus: $viewModel.errorStatus) {
         VStack(spacing:0){
             LoginAppBar()
             Group{
@@ -53,32 +54,32 @@ struct LoginScreen : View{
                     }
                 }
             },
-                        isDisable: false,   buttonColorSolid: ButtonColorSolid.Green )
+                          isDisable: false,   buttonColorSolid: ButtonColorSolid.Green )
             .padding(.horizontal,16)
             .padding(.top,32)
             
             ZStack{
                 Divider()
-                    
+                
                     .padding(.horizontal,16)
                 Text("Or sign in with")
                     .padding(.horizontal,16)
                     .background(AppColors.screenBackGround)
-                    
+                
             }
             .padding(.top,32)
-                
+            
             HStack(spacing:16){
                 Image("google")
                     .frame(width: 48,height: 48)
                     .onTapGesture {
-                    /*
-                     let userinfo =   UserInfo()
-                        userinfo.name = "Sumit"
-                        userinfo.isLogin = true
-                        userInfoEnv.userInfo = userinfo
-                     */
-                       var user = Auth.auth().currentUser
+                        /*
+                         let userinfo =   UserInfo()
+                         userinfo.name = "Sumit"
+                         userinfo.isLogin = true
+                         userInfoEnv.userInfo = userinfo
+                         */
+                        var user = Auth.auth().currentUser
                         if(user == nil){
                             viewModel.signUpWithGoogle(){ isLogin in
                                 nextScreen(LoginFlowScreen.MainApp)
@@ -96,7 +97,7 @@ struct LoginScreen : View{
             }
             .padding(.top,16)
             
-                
+            
             HStack{
                 Text("Don’t have an account? ")
                     .foregroundColor(AppColors.grayScaleSoftBlack)
@@ -106,10 +107,11 @@ struct LoginScreen : View{
                     .font(.system(size: 16, weight: Font.Weight.bold))
             }
             .padding(.top,32)
-
+            
             Spacer()
-    
+            
         }
+    }
     }
 }
 

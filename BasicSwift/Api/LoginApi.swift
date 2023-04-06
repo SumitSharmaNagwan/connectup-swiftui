@@ -26,8 +26,8 @@ struct LoginApiEndPoints {
 
 struct LoginApi {
     
-    func loginWithGoogle(loginWithAuthRequest: LoginWithAuthRequest, completionHandler: @escaping (_ result: LoginInWithGoogleResponse?)-> Void  ){
-        //HttpUtility.shared.apiCall(request: loginWithAuthRequest  , methodType: LoginApiEndPoints.loginWithGoogleFacebookLinketIn.methodType, endPoint: LoginApiEndPoints.loginWithGoogleFacebookLinketIn.endPoint, resultType: LoginInWithGoogleResponse.self, completionHandler: completionHandler)
+    func loginWithGoogle(loginWithAuthRequest: LoginWithAuthRequest, completionHandler: @escaping (_ result: Resourse< LoginInWithGoogleResponse>?)-> Void  ){
+        HttpUtility.shared.apiCall(request: loginWithAuthRequest  , methodType: LoginApiEndPoints.loginWithGoogleFacebookLinketIn.methodType, endPoint: LoginApiEndPoints.loginWithGoogleFacebookLinketIn.endPoint, resultType: LoginInWithGoogleResponse.self, completionHandler: completionHandler)
     
     }
     
