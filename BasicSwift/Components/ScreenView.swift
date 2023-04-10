@@ -54,7 +54,10 @@ struct ScreenView <Content: View>: View {
             }
             
             if ScreenSubView.InvalidInputPopup == screenSubView{
-                DialogMessage(screenSubView: $screenSubView, title: "Invalid Input", message: "\(errorStatus.message!)")
+                
+               
+                
+                DialogMessage(screenSubView: $screenSubView, title: "Invalid Input", message: errorStatus.message)
             }
           
             
@@ -73,7 +76,7 @@ struct DialogMessage : View {
     @Binding
     var screenSubView : ScreenSubView
     let title : String
-    let message : String
+    let message : String?
     var body: some View{
         VStack {
             
@@ -83,7 +86,7 @@ struct DialogMessage : View {
                     .font(.system(size: 16, weight: Font.Weight.bold))
                    
                 Divider()
-                Text(message)
+                Text(message ?? " ")
                     .padding(.top,8)
                
                 Button {

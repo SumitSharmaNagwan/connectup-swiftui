@@ -85,11 +85,27 @@ struct SearchScreen:View{
                     ScrollView{
                         LazyVGrid(columns: columns , spacing: 0){
                             
-                            ForEach(searchViewModel.userList, id : \.self){ item in
-                                
+                            ForEach(searchViewModel.userList.indices, id : \.self){ i in
+                                var item = searchViewModel.userList[i]
                                 SearchViewItem(searchViewModel: item, isVerified: searchViewModel.curruntSearchTab.rawValue == SearchTab.Verified.rawValue)
+                                    .onAppear{
+                                        if i == searchViewModel.userList.count - 1  && searchViewModel.canLoadMore {
+                                            searchViewModel.loadUser(isClearList: false)
+                                        }
+                                    }
                                 
                             }
+                           
+                        }
+                        if searchViewModel.canLoadMore {
+                            HStack{
+                                ProgressView()
+                                    .onAppear{
+                                      
+                                    }
+                                
+                            }
+                            
                         }
                     }
                     .frame(minHeight: 200,maxHeight: .infinity)

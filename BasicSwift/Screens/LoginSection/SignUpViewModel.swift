@@ -54,6 +54,7 @@ class SignUpViewModel: ObservableObject{
         switch error {
         case .failure(let errorStatus):
             let type =  errorStatus.errorType
+            self.errorStatus = errorStatus
             switch type {
             case .Unauthorized :
                 
@@ -80,8 +81,8 @@ class SignUpViewModel: ObservableObject{
         let loginWithAuthRequest = LoginWithAuthRequest(appVersion: "String", fcmToken: "String", modelName: "String", osVersion: "String" ,token: "",email: self.email,password: self.password)
         
         self.loginApi.loginWithGoogle(loginWithAuthRequest: loginWithAuthRequest)
-            .sink { error in
-                error
+            .sink { [weak self] error in
+                self?.errorHandle(error: error)
             } receiveValue: { [weak self]  result in
                 let ct = result.customToken
                  
@@ -96,66 +97,6 @@ class SignUpViewModel: ObservableObject{
             }
             .store(in: &cancellable)
 
-        
-        /*
-        {result in
-            print(result)
-            
-            switch result?.status {
-            case .Loading :
-               
-                self.isShowLoader = true
-                break
-            case .Success :
-                let ct = result?.data?.customToken
-                 
-                 Auth.auth().signIn(withCustomToken: ct!) { AuthDataResult, error1 in
-                    let user = AuthDataResult?.user
-                    
-                     if user != nil{
-                         onLogin(true)
-                     }
-                     
-                     print(AuthDataResult)
-                     
-                     print(error1)
-                     self.isShowLoader = false
-                 }
-                
-            case .Error :
-                self.isShowLoader = false
-                if result?.error != nil{
-                    self.errorStatus = (result?.error)!
-                    let type =  self.errorStatus.errorType
-                    switch type {
-                    case .Unauthorized :
-                        
-                        break
-                    case .BadRequest :
-                        
-                        self.screenSubView = ScreenSubView.InvalidInputPopup
-                        break
-                        
-                    default :
-                        break
-                    }
-                        
-                    
-                    
-                    
-                }
-                self.screenSubView = ScreenSubView.InvalidInputPopup
-                break
-                     
-                 
-            case .none:
-                self.isShowLoader = false
-                break
-            }
-            
-        }
-        
-        */
     }
     
     func signUpWithGoogle( onLogin: @escaping (Bool)->()){
@@ -217,40 +158,6 @@ class SignUpViewModel: ObservableObject{
                      }
                 }
                 .store(in: &self.cancellable)
-
-            
-            /*
-            {result in
-                print(result)
-                switch result?.status {
-                case .Loading :
-                    break
-                case .Success :
-                    let ct = result?.data?.customToken
-                     
-                     Auth.auth().signIn(withCustomToken: ct!) { AuthDataResult, error1 in
-                        let user = AuthDataResult?.user
-                        
-                         if user != nil{
-                             onLogin(true)
-                         }
-                         
-                         print(AuthDataResult)
-                         
-                         print(error1)
-                     }
-                    
-                case .Error :
-                    
-                    break
-                         
-                     
-                case .none:
-                    break
-                }
-            }
-            
-            */
             
         })
     }

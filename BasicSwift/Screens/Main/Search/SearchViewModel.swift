@@ -14,6 +14,7 @@ final class SearchViewModel : ObservableObject{
     var userList = Array<SearchUserModel>()
     let recommendUserApi = RecommendationApi()
     var page = 0
+    @Published var canLoadMore = false
     @Published
      var curruntSearchTab = SearchTab.Newest
     @Published var searchText  = "" {
@@ -46,7 +47,10 @@ final class SearchViewModel : ObservableObject{
     }
     
     func loadUser(isClearList : Bool){
-        loaderState.show()
+        if isClearList {
+            loaderState.show()
+        }
+     
         if isClearList {
             userList.removeAll()
         }
@@ -61,11 +65,15 @@ final class SearchViewModel : ObservableObject{
         )
         recommendUserApi.searchUser(searchUserRequest: searchUserRequest)
             .sink {[weak self] error in
+                self?.canLoadMore = false
                 self?.handleError(error: error)
             } receiveValue: { [weak self] list in
                 self?.loaderState.isHide()
                 if limit == list.count{
                     self?.page += 1
+                    self?.canLoadMore = true
+                }else {
+                    self?.canLoadMore = false
                 }
                     DispatchQueue.main.async {
                     
